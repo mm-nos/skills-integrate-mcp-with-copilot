@@ -5,14 +5,16 @@ A super simple FastAPI application that allows students to view and sign up for 
 ## Features
 
 - View all available extracurricular activities
-- Sign up for activities
+- Register/login with JWT authentication
+- View current authenticated user profile
+- Sign up for activities (authenticated)
 
 ## Getting Started
 
 1. Install the dependencies:
 
    ```
-   pip install fastapi uvicorn
+   pip install -r ../requirements.txt
    ```
 
 2. Run the application:
@@ -30,7 +32,19 @@ A super simple FastAPI application that allows students to view and sign up for 
 | Method | Endpoint                                                          | Description                                                         |
 | ------ | ----------------------------------------------------------------- | ------------------------------------------------------------------- |
 | GET    | `/activities`                                                     | Get all activities with their details and current participant count |
-| POST   | `/activities/{activity_name}/signup?email=student@mergington.edu` | Sign up for an activity                                             |
+| POST   | `/auth/register`                                                  | Register a new user account                                         |
+| POST   | `/auth/login`                                                     | Login and receive JWT token                                         |
+| GET    | `/auth/me`                                                        | Get profile for current authenticated user                          |
+| POST   | `/activities/{activity_name}/signup?email=student@mergington.edu` | Sign up for an activity (requires JWT)                             |
+| DELETE | `/activities/{activity_name}/unregister?email=student@mergington.edu` | Unregister from an activity (requires JWT)                     |
+
+### Authentication
+
+For protected routes, include a bearer token in the `Authorization` header:
+
+```
+Authorization: Bearer <access_token>
+```
 
 ## Data Model
 
